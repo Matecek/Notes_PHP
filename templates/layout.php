@@ -21,7 +21,7 @@
 
     <div>
         <?php
-            include_once "templates/pages/$page.php";
+            require_once "templates/pages/$page.php";
         ?>
     </div>
 </div>

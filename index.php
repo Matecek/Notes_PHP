@@ -11,5 +11,10 @@ const DEFAULT_ACTION = 'list';
 $action = $_GET['action'] ?? DEFAULT_ACTION;
 
 $view = new View();
+if ($action === 'create') {
+    $resultCreate = "udało się";
+}else{
+    $resultList = "wyświetlamy notatki";
+}
 $view->render($action);
 

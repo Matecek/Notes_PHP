@@ -10,7 +10,7 @@
 <body class="body">
 <div class="wrapper">
 	<div class="header">
-		<h1><i class="far fa-clipboard"></i>Moje notatki</h1>
+		<h1><i class="far fa-clipboard"></i> Moje notatki</h1>
 	</div>
 
 	<div class="container">
@@ -27,7 +27,7 @@
 	</div>
 
 	<div class="footer">
-		<p>Notatki - projekt w kursie PHP</p>
+		<p>Notatki — projekt w kursie PHP</p>
 	</div>
 </div>
 </body>

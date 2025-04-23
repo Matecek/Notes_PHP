@@ -8,8 +8,7 @@ require_once 'src/view.php';
 
 const DEFAULT_ACTION = 'list';
 
-$action = $_GET['action'] ?? DEFAULT_ACTION;
-
+$action = $_GET['_action'] ?? DEFAULT_ACTION;
 $view = new View();
 
 $viewparams = [];

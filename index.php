@@ -13,8 +13,15 @@ $view = new View();
 
 $viewparams = [];
 if ($action === 'create') {
+
     $page = 'create';
-    $viewparams['resultCreate'] = "udało się";
+
+    if (!empty($_POST)) {
+        $viewparams = [
+            'title' => $_POST['title'],
+            'description' => $_POST['description'],
+        ];
+    };
 }else{
     $page = 'list';
     $viewparams['resultList'] = "wyświetlamy notatki";

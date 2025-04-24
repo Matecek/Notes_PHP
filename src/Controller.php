@@ -8,6 +8,7 @@ require_once 'src/View.php';
 class Controller
 {
     private const DEFAULT_ACTION = 'list';
+
     private array $request;
     private View $view;
 
@@ -50,6 +51,7 @@ class Controller
         }
         $this->view->render($page, $viewpager);
     }
+
     private function action(): string
     {
         $data = $this->getRequestGet();

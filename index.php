@@ -8,5 +8,10 @@ require_once 'src/controller.php';
 
 const DEFAULT_ACTION = 'list';
 
-$controller = new Controller($_GET, $_POST);
+$request = [
+    'get' => $_GET,
+    'post' => $_POST,
+];
+
+$controller = new Controller($request);
 $controller->run();

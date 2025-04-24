@@ -8,31 +8,35 @@ require_once 'src/View.php';
 class Controller
 {
     private const DEFAULT_ACTION = 'list';
-    private array $getData;
-    private array $postData;
-    public function __construct(array $getData, array $postData)
+    private array $request;
+
+    public function __construct(array $request)
     {
-        $this->getData = $getData;
-        $this->postData = $postData;
+        $this->request = $request;
     }
+
+    public function action(): string
+    {
+        $data = $this->getRequestGet();
+        return $data['_action'] ?? self::DEFAULT_ACTION;
+    }
+
     public function run(): void
     {
-
-        $action = $this->getData['_action'] ?? self::DEFAULT_ACTION;
-
         $view = new View();
         $viewpager = [];
 
-        switch ($action) {
+        switch ($this->action()) {
             case 'create':
                 $page = 'create';
                 $created = false;
 
-                if (!empty($this->postData)) {
+                $data = $this->getRequestPost();
+                if (!empty($data)) {
                     $created = true;
                     $viewpager = [
-                        'title' => $this->postData['title'],
-                        'description' => $this->postData['description'],
+                        'title' => $data['title'],
+                        'description' => $data['description'],
                     ];
                 }
 
@@ -50,5 +54,15 @@ class Controller
                 break;
         }
         $view->render($page, $viewpager);
+    }
+
+    private function getRequestPost(): array
+    {
+        return $this->request['post'] ?? [];
+    }
+
+    private function getRequestGet(): array
+    {
+        return $this->request['get'] ?? [];
     }
 }

@@ -9,21 +9,16 @@ class Controller
 {
     private const DEFAULT_ACTION = 'list';
     private array $request;
+    private View $view;
 
     public function __construct(array $request)
     {
         $this->request = $request;
-    }
-
-    public function action(): string
-    {
-        $data = $this->getRequestGet();
-        return $data['_action'] ?? self::DEFAULT_ACTION;
+        $this->view = new View();
     }
 
     public function run(): void
     {
-        $view = new View();
         $viewpager = [];
 
         switch ($this->action()) {
@@ -53,7 +48,12 @@ class Controller
                 $viewpager['resultList'] = "wyświetlamy notatki";
                 break;
         }
-        $view->render($page, $viewpager);
+        $this->view->render($page, $viewpager);
+    }
+    private function action(): string
+    {
+        $data = $this->getRequestGet();
+        return $data['_action'] ?? self::DEFAULT_ACTION;
     }
 
     private function getRequestPost(): array

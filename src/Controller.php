@@ -3,17 +3,29 @@ declare(strict_types=1);
 
 namespace App;
 
+
+
+require_once 'src/Database.php';
 require_once 'src/View.php';
 
 class Controller
 {
     private const DEFAULT_ACTION = 'list';
 
+    private static array $config= [];
+
     private array $request;
     private View $view;
 
+    public static function initConfiguration(array $config): void
+    {
+        self::$config = $config;
+    }
+
     public function __construct(array $request)
     {
+        $db = new Database(self::$config['db']);
+
         $this->request = $request;
         $this->view = new View();
     }

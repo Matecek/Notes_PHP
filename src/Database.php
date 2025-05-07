@@ -21,6 +21,5 @@ class Database
         }
 
 //        $connection = new PDO($dsn, $config['user'], $config['password']);
-//        dump($connection);
     }
 }

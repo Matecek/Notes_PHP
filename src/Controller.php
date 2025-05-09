@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Exception\ConfigurationException;
+use App\Exception\StorageException;
 
-
-require_once 'src/Database.php';
-require_once 'src/View.php';
+require_once 'Database.php';
+require_once 'View.php';
+require_once 'Exception/ConfigurationException.php';
 
 class Controller
 {
@@ -22,8 +24,15 @@ class Controller
         self::$config = $config;
     }
 
+    /**
+     * @throws ConfigurationException
+     * @throws StorageException
+     */
     public function __construct(array $request)
     {
+        if (empty(self::$config['db'])) {
+            throw new ConfigurationException('Config error');
+        }
         $db = new Database(self::$config['db']);
 
         $this->request = $request;

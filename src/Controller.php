@@ -51,7 +51,6 @@ class Controller
                 $data = $this->getRequestPost();
 
                 if (!empty($data)) {
-                    try {
                         $errors = [];
 
                         if (empty(trim($data['title']))) {
@@ -66,20 +65,9 @@ class Controller
                             throw new StorageException(implode('<br>', $errors));
                         }
 
-                        $this->database->createNote($data);
                         $created = true;
-
-                        $viewpager = [
-                            'title' => $data['title'],
-                            'description' => $data['description'],
-                        ];
-                    } catch (StorageException $e) {
-                        $viewpager = [
-                            'error' => $e->getMessage(),
-                            'title' => $data['title'] ?? '',
-                            'description' => $data['description'] ?? ''
-                        ];
-                    }
+                        $this->database->createNote($data);
+                        header('Location: /');
                 }
 
                 $viewpager['created'] = $created;
@@ -92,7 +80,12 @@ class Controller
                 break;
             default:
                 $page = 'list';
-                $viewpager['resultList'] = "wyświetlamy notatki";
+                $data = $this->getRequestGet();
+
+                $viewpager['resultList'] = [
+                    'title' => $data['title'] ?? '',
+                    'description' => $data['description'] ?? '',
+                ];
                 break;
         }
         $this->view->render($page, $viewpager);

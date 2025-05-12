@@ -28,19 +28,15 @@ class Database
     public function createNote(array $data): void
     {
         try{
-            dump($data);
-
             $title = $this->conn->quote($data['title']);
             $description = $this->conn->quote($data['description']);
             $created = $this->conn->quote(date('Y-m-d H:i:s'));
 
             $query = /** @lang text */
                 "INSERT INTO notes (title, description, created) VALUES ($title, $description, $created)";
-            dump($query);
-            $result = $this->conn->exec($query);
-            dump($result);
+
+            $this->conn->exec($query);
         }catch (Throwable $e){
-            dump($e);
             throw new StorageException('Nie udało się utworzyć nowej notatki', 400);
         }
     }

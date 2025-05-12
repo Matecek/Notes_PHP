@@ -9,6 +9,7 @@ use Throwable;
 
 require_once 'src/Utils/debug.php';
 require_once 'src/controller.php';
+require_once 'src/Exception/AppException.php';
 
 $config = require_once 'config/config.php';
 

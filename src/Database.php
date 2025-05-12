@@ -28,17 +28,20 @@ class Database
     public function createNote(array $data): void
     {
         try{
-            $title = $data['title'];
-            $description = $data['description'];
-            $created = date('Y-m-d H:i:s');
+            dump($data);
+
+            $title = $this->conn->quote($data['title']);
+            $description = $this->conn->quote($data['description']);
+            $created = $this->conn->quote(date('Y-m-d H:i:s'));
 
             $query = /** @lang text */
-                "INSERT INTO notes (title, description, created) VALUES ('$title', '$description', '$created')";
-
-            $this->conn->exec($query);
+                "INSERT INTO notes (title, description, created) VALUES ($title, $description, $created)";
+            dump($query);
+            $result = $this->conn->exec($query);
+            dump($result);
         }catch (Throwable $e){
             dump($e);
-            exit;
+            throw new StorageException('Nie udało się utworzyć nowej notatki', 400);
         }
     }
 
@@ -46,7 +49,7 @@ class Database
     {
         $dsn = "mysql:dbname={$config['database']};host={$config['host']}";
 
-        $this->conn = new PDO($dsn, $config['user'], $config['password']);
+        $this->conn = new PDO($dsn, $config['user'], $config['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     }
 
     private function validateConfig(array $config): void

@@ -48,17 +48,38 @@ class Controller
             case 'create':
                 $page = 'create';
                 $created = false;
-
                 $data = $this->getRequestPost();
+
                 if (!empty($data)) {
-                    $created = true;
+                    try {
+                        $errors = [];
 
-                    $this->database->createNote($data);
+                        if (empty(trim($data['title']))) {
+                            $errors[] = 'Tytuł nie może być pusty.';
+                        }
 
-                    $viewpager = [
-                        'title' => $data['title'],
-                        'description' => $data['description'],
-                    ];
+                        if (empty(trim($data['description']))) {
+                            $errors[] = 'Treść nie może być pusta.';
+                        }
+
+                        if (!empty($errors)) {
+                            throw new StorageException(implode('<br>', $errors));
+                        }
+
+                        $this->database->createNote($data);
+                        $created = true;
+
+                        $viewpager = [
+                            'title' => $data['title'],
+                            'description' => $data['description'],
+                        ];
+                    } catch (StorageException $e) {
+                        $viewpager = [
+                            'error' => $e->getMessage(),
+                            'title' => $data['title'] ?? '',
+                            'description' => $data['description'] ?? ''
+                        ];
+                    }
                 }
 
                 $viewpager['created'] = $created;

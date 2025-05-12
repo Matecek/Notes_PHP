@@ -43,53 +43,59 @@ class Controller
     public function run(): void
     {
         $viewpager = [];
+        try {
+            switch ($this->action()) {
+                case 'create':
+                    $page = 'create';
+                    $data = $this->getRequestPost();
 
-        switch ($this->action()) {
-            case 'create':
-                $page = 'create';
-                $created = false;
-                $data = $this->getRequestPost();
-
-                if (!empty($data)) {
+                    if (!empty($data)) {
                         $errors = [];
 
                         if (empty(trim($data['title']))) {
                             $errors[] = 'Tytuł nie może być pusty.';
                         }
 
-                        if (empty(trim($data['description']))) {
-                            $errors[] = 'Treść nie może być pusta.';
-                        }
-
                         if (!empty($errors)) {
                             throw new StorageException(implode('<br>', $errors));
                         }
 
-                        $created = true;
-                        $this->database->createNote($data);
-                        header('Location: /');
-                }
+                        $this->database->createNote([
+                            'title' => $data['title'],
+                            'description' => $data['description']
+                        ]);
+                        header('Location: /?before=created');
+                    }
+                    break;
 
-                $viewpager['created'] = $created;
-                break;
-            case 'show':
-                $viewpager = [
-                    'title' => 'Moja notatka',
-                    'description' => 'Opis',
-                ];
-                break;
-            default:
-                $page = 'list';
-                $data = $this->getRequestGet();
+                case 'show':
+                    $viewpager = [
+                        'title' => 'Moja notatka',
+                        'description' => 'Opis',
+                    ];
+                    $page = 'show';
+                    break;
 
-                $viewpager['resultList'] = [
-                    'title' => $data['title'] ?? '',
-                    'description' => $data['description'] ?? '',
-                ];
-                break;
+                default:
+                    $page = 'list';
+                    $data = $this->getRequestGet();
+                    $viewpager['before'] = $data['before'] ?? null;
+                    break;
+            }
+        } catch (StorageException $e) {
+            $page = 'create';
+            $data = $this->getRequestPost();
+            $viewpager = [
+                'error' => $e->getMessage(),
+                'title' => $data['title'] ?? '',
+                'description' => $data['description'] ?? '',
+                'created' => false
+            ];
         }
+
         $this->view->render($page, $viewpager);
     }
+
 
     private function action(): string
     {

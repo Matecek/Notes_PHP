@@ -79,8 +79,6 @@ class Controller
                     $page = 'list';
                     $data = $this->getRequestGet();
 
-
-
                     $viewParams = [
                         'notes' => $this->database->getNotes(),
                         'before' => $data['_before'] ?? null

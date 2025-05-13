@@ -10,7 +10,7 @@
             }
             ?>
 
-        <div class="tbl-header">
+        <div class="table-container">
             <table>
                 <thead>
                 <tr>
@@ -20,12 +20,15 @@
                     <th>Opcje</th>
                 </tr>
                 </thead>
-            </table>
-        </div>
-        <div class="tbl-content">
-            <table>
                 <tbody>
-
+                    <?php foreach ($params['notes'] as $note) : ?>
+                        <tr>
+                            <td><?= $note['id']?></td>
+                            <td><?= $note['title']?></td>
+                            <td><?= (new DateTime($note['created']))->format('Y-m-d') ?></td>
+                            <td>Options</td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

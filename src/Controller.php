@@ -42,7 +42,6 @@ class Controller
 
     public function run(): void
     {
-        $viewpager = [];
         try {
             switch ($this->action()) {
                 case 'create':
@@ -64,12 +63,12 @@ class Controller
                             'title' => $data['title'],
                             'description' => $data['description']
                         ]);
-                        header('Location: /?before=created');
+                        header('Location: /?_before=created');
                     }
                     break;
 
                 case 'show':
-                    $viewpager = [
+                    $viewParams = [
                         'title' => 'Moja notatka',
                         'description' => 'Opis',
                     ];
@@ -80,16 +79,19 @@ class Controller
                     $page = 'list';
                     $data = $this->getRequestGet();
 
-                    $notes = $this->database->getNotes();
-                    dump($notes);
 
-                    $viewpager['before'] = $data['before'] ?? null;
+
+                    $viewParams = [
+                        'notes' => $this->database->getNotes(),
+                        'before' => $data['_before'] ?? null
+                    ];
+
                     break;
             }
         } catch (StorageException $e) {
             $page = 'create';
             $data = $this->getRequestPost();
-            $viewpager = [
+            $viewParams = [
                 'error' => $e->getMessage(),
                 'title' => $data['title'] ?? '',
                 'description' => $data['description'] ?? '',
@@ -97,7 +99,7 @@ class Controller
             ];
         }
 
-        $this->view->render($page, $viewpager);
+        $this->view->render($page, $viewParams ?? []);
     }
 
 

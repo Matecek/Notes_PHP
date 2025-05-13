@@ -79,6 +79,10 @@ class Controller
                 default:
                     $page = 'list';
                     $data = $this->getRequestGet();
+
+                    $notes = $this->database->getNotes();
+                    dump($notes);
+
                     $viewpager['before'] = $data['before'] ?? null;
                     break;
             }

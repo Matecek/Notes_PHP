@@ -16,6 +16,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Tytuł</th>
+                    <th>Data</th>
                     <th>Opcje</th>
                 </tr>
                 </thead>

@@ -21,12 +21,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($params['notes'] as $note) : ?>
+                    <?php foreach ($params['notes'] ?? [] as $note) : ?>
                         <tr>
-                            <td><?= $note['id']?></td>
-                            <td><?= $note['title']?></td>
-                            <td><?= (new DateTime($note['created']))->format('Y-m-d') ?></td>
-                            <td>Options</td>
+                            <td><?= (int) $note['id']?></td>
+                            <td><?= htmlentities($note['title'])?></td>
+                            <td><?= htmlentities($note['created']) ?></td>
+                            <td>
+                                <a href="/?_action=show$id=<?= (int) $note['id']?>">Pokaż</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

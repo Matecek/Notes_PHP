@@ -304,6 +304,7 @@ tr:nth-child(even) {
     border-radius: 6px;
     text-align: center;
     font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 .error {

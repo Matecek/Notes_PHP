@@ -11,7 +11,7 @@
             ?>
 
         <div class="tbl-header">
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table>
                 <thead>
                 <tr>
                     <th>Id</th>
@@ -22,7 +22,7 @@
             </table>
         </div>
         <div class="tbl-content">
-            <table cellpadding="0" cellspacing="0" border="0">
+            <table>
                 <tbody>
 
                 </tbody>

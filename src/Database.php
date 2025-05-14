@@ -31,7 +31,7 @@ class Database
     {
         try{
             $query = /** @lang text */
-                "SELECT id, title, description FROM notes WHERE id = $id";
+                "SELECT * FROM notes WHERE id = $id";
             $result = $this->conn->query($query);
             $note = $result->fetch(PDO::FETCH_ASSOC);
         }catch (Throwable $e){

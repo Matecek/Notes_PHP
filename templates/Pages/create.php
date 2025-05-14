@@ -9,7 +9,7 @@
             </div>
         <?php endif; ?>
 
-        <form id="note-form" class="note-form" action="/?_action=create" method="POST">
+        <form id="note-form" class="note-form" action="/?action=create" method="POST">
             <ul>
                 <li>
                     <label>Tytuł <span class="required">*</span></label>
@@ -24,7 +24,7 @@
                     <textarea name="description" id="field5" class="field-long field-textarea"><?= htmlspecialchars($params['description'] ?? '') ?></textarea>
                 </li>
                 <li>
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Zapisz">
                 </li>
             </ul>
         </form>

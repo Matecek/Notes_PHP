@@ -64,18 +64,22 @@ class Controller
                     $page = 'show';
 
                     $data = $this->getRequestGet();
-                    $noteId = (int) $data['id'];
+                    $noteId = (int) ($data['id'] ?? null);
 
-                    try{
-                        $this->database->getNote($noteId);
-                    }catch (NotFoundException $e){
-                        exit('Jesteśmy w kontrolerze');
+                    if (!$noteId) {
+                        header('Location: /?error=missingNoteId');
+                        exit;
                     }
 
+                    try{
+                        $note = $this->database->getNote($noteId);
+                    }catch (NotFoundException $e){
+                        header('Location: /?error=noteNotFound');
+                        exit;
+                    }
 
                     $viewParams = [
-                        'title' => 'Moja notatka',
-                        'description' => 'Opis',
+                        'note' => $note
                     ];
                     break;
 
@@ -85,7 +89,8 @@ class Controller
 
                     $viewParams = [
                         'notes' => $this->database->getNotes(),
-                        'before' => $data['_before'] ?? null
+                        'before' => $data['before'] ?? null,
+                        'error' => $data['error'] ?? null
                     ];
 
                     break;
@@ -99,7 +104,7 @@ class Controller
     private function action(): string
     {
         $data = $this->getRequestGet();
-        return $data['_action'] ?? self::DEFAULT_ACTION;
+        return $data['action'] ?? self::DEFAULT_ACTION;
     }
 
     private function getRequestPost(): array

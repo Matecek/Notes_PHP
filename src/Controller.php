@@ -47,12 +47,11 @@ class Controller
             switch ($this->action()) {
                 case 'create':
                     $page = 'create';
-                    $data = $this->getRequestPost();
 
-                    if (!empty($data)) {
+                    if ($this->request->hasPost()) {
                         $noteData = [
-                            'title' => $data['title'],
-                            'description' => $data['description']
+                            'title' => $this->request->postParam('title'),
+                            'description' => $this->request->postParam('description')
                         ];
                         $this->database->createNote($noteData);
                         header('Location: /?before=created');

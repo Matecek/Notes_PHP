@@ -1,5 +1,5 @@
 <div>
-    <h3>Nowa notatka</h3>
+    <h3>Dodawanie notatki</h3>
     <div>
         <div id="client-error" style="color: red; margin-bottom: 10px; display: none;"></div>
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App;
 
 use App\Exception\ConfigurationException;
+use App\Exception\NotFoundException;
 use App\Exception\StorageException;
 
 require_once 'Database.php';
@@ -42,37 +43,40 @@ class Controller
 
     public function run(): void
     {
-        try {
             switch ($this->action()) {
                 case 'create':
                     $page = 'create';
                     $data = $this->getRequestPost();
 
                     if (!empty($data)) {
-                        $errors = [];
-
-                        if (empty(trim($data['title']))) {
-                            $errors[] = 'Tytuł nie może być pusty.';
-                        }
-
-                        if (!empty($errors)) {
-                            throw new StorageException(implode('<br>', $errors));
-                        }
-
-                        $this->database->createNote([
+                        $noteData = [
                             'title' => $data['title'],
                             'description' => $data['description']
-                        ]);
-                        header('Location: /?_before=created');
+                        ];
+                        $this->database->createNote($noteData);
+                        header('Location: /?before=created');
+                        exit;
                     }
+
                     break;
 
                 case 'show':
+                    $page = 'show';
+
+                    $data = $this->getRequestGet();
+                    $noteId = (int) $data['id'];
+
+                    try{
+                        $this->database->getNote($noteId);
+                    }catch (NotFoundException $e){
+                        exit('Jesteśmy w kontrolerze');
+                    }
+
+
                     $viewParams = [
                         'title' => 'Moja notatka',
                         'description' => 'Opis',
                     ];
-                    $page = 'show';
                     break;
 
                 default:
@@ -86,16 +90,7 @@ class Controller
 
                     break;
             }
-        } catch (StorageException $e) {
-            $page = 'create';
-            $data = $this->getRequestPost();
-            $viewParams = [
-                'error' => $e->getMessage(),
-                'title' => $data['title'] ?? '',
-                'description' => $data['description'] ?? '',
-                'created' => false
-            ];
-        }
+
 
         $this->view->render($page, $viewParams ?? []);
     }

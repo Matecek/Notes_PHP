@@ -27,7 +27,7 @@
                             <td><?= htmlentities($note['title'])?></td>
                             <td><?= htmlentities($note['created']) ?></td>
                             <td>
-                                <a href="/?_action=show$id=<?= (int) $note['id']?>">Pokaż</a>
+                                <a href="/?_action=show&id=<?= (int) $note['id']?>">Pokaż</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

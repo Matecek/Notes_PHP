@@ -10,28 +10,28 @@
 </head>
 
 <body class="body">
-<div class="wrapper">
-	<div class="header">
-		<h1><i class="far fa-clipboard"></i> Moje notatki</h1>
-	</div>
+    <div class="wrapper">
+        <div class="header">
+            <h1><i class="far fa-clipboard"></i> Moje notatki</h1>
+        </div>
 
-	<div class="container">
-		<div class="menu">
-			<ul>
-				<li><a href="/">Strona główna</a></li>
-				<li><a href="/?_action=create">Nowa notatka</a></li>
-			</ul>
-		</div>
+        <div class="container">
+            <div class="menu">
+                <ul>
+                    <li><a href="/">Strona główna</a></li>
+                    <li><a href="/?_action=create">Nowa notatka</a></li>
+                </ul>
+            </div>
 
-		<div class="page">
-            <?php require_once("templates/pages/$page.php"); ?>
-		</div>
-	</div>
+            <div class="page">
+                <?php require_once("templates/pages/$page.php"); ?>
+            </div>
+        </div>
 
-	<div class="footer">
-		<p>Notatki — projekt w kursie PHP</p>
-	</div>
-</div>
+        <div class="footer">
+            <p>Notatki — projekt w kursie PHP</p>
+        </div>
+    </div>
 </body>
 
 </html>

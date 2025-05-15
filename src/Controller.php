@@ -94,6 +94,10 @@ class Controller
     public function run(): void
     {
         $action = $this->action() . 'Action';
+
+        if (!method_exists($this, $action)) {
+            $action = self::DEFAULT_ACTION . 'Action';
+        }
         $this->$action();
     }
 

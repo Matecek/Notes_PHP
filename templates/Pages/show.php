@@ -10,6 +10,7 @@
            <?= $note['description'] ?>
         </li>
     </ul>
+        <a href="/?action=edit&id=<?= $note['id']?>"><button>Edytuj</button></a>
     <?php else : ?>
     <div>
         <p>Brak notatek do wyświetlenia</p>

@@ -5,7 +5,7 @@
 
         <?php if (!empty($params['error'])): ?>
             <div class="error-message" style="color: red; margin-bottom: 10px;">
-                <?= htmlspecialchars($params['error']) ?>
+                <?= ($params['error']) ?>
             </div>
         <?php endif; ?>
 

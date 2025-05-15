@@ -43,6 +43,13 @@ abstract class AbstractController
         $this->$action();
     }
 
+    protected function redirect(string $to, array $params): void
+    {
+        $location = $to . '?' . http_build_query($params);
+        header("Location: $location");
+        exit;
+    }
+
     protected function action(): string
     {
         return $this->request->getParam('action', self::DEFAULT_ACTION);

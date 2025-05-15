@@ -1,0 +1,14 @@
+{
+    "name": "mateusz.wojtas/notes_php",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mateusz Wojtas"
+        }
+    ],
+    "require": {}
+}

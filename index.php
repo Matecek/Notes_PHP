@@ -1,11 +1,14 @@
 <?php
 declare(strict_types=1);
 
-spl_autoload_register(function (string $class) {
-    $path = str_replace(['\\', 'App/'], ['/', ''], $class);
-    $path = "src/$path.php";
-    require_once $path;
-});
+require __DIR__ . '/vendor/autoload.php';
+
+//spl_autoload_register(function (string $class) {
+//    $path = str_replace(['\\', 'App/'], ['/', ''], $class);
+//    $path = "src/$path.php";
+//    require_once $path;
+//});
+var_dump(__DIR__);
 
 require_once 'src/Utils/debug.php';
 $config = require_once 'config/config.php';

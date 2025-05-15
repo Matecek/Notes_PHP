@@ -8,7 +8,6 @@ require __DIR__ . '/vendor/autoload.php';
 //    $path = "src/$path.php";
 //    require_once $path;
 //});
-var_dump(__DIR__);
 
 require_once 'src/Utils/debug.php';
 $config = require_once 'config/config.php';

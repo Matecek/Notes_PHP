@@ -8,7 +8,6 @@ require_once 'View.php';
 require_once 'Exception/ConfigurationException.php';
 
 use App\Exception\ConfigurationException;
-use App\Exception\StorageException;
 
 abstract class AbstractController
 {
@@ -25,10 +24,6 @@ abstract class AbstractController
         self::$config = $config;
     }
 
-    /**
-     * @throws ConfigurationException
-     * @throws StorageException
-     */
     public function __construct(Request $request)
     {
         if (empty(self::$config['db'])) {

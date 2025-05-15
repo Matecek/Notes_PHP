@@ -4,10 +4,10 @@
     <ul>
         <li>Utworzono: <?= ($note['created']) ?></li>
         <li>
-            Tytuł: <?= htmlentities($note['title']) ?>
+            Tytuł: <?= ($note['title']) ?>
         </li>
         <li>
-           <?= htmlentities($note['description']) ?>
+           <?= ($note['description']) ?>
         </li>
     </ul>
     <?php else : ?>

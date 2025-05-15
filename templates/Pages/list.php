@@ -35,10 +35,10 @@
                 </thead>
                 <tbody>
                 <?php foreach ($params['notes'] ?? [] as $note) : ?>
-                    <tr class="clickable-row" data-href="/?action=show&id=<?= (int) $note['id'] ?>">
-                        <td><?= (int) $note['id']?></td>
-                        <td><?= htmlentities($note['title']) ?></td>
-                        <td><?= htmlentities($note['created']) ?></td>
+                    <tr class="clickable-row" data-href="/?action=show&id=<?= $note['id'] ?>">
+                        <td><?= $note['id']?></td>
+                        <td><?= $note['title'] ?></td>
+                        <td><?= $note['created'] ?></td>
 <!--                        <td><button>Pokaż</button></td>-->
                     </tr>
                 <?php endforeach; ?>

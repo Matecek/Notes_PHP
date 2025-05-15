@@ -2,12 +2,12 @@
     <?php $note = $params['note'] ?? null; ?>
     <?php if ($note) : ?>
     <ul>
-        <li>Utworzono: <?= ($note['created']) ?></li>
+        <li>Utworzono: <?= $note['created'] ?></li>
         <li>
-            Tytuł: <?= ($note['title']) ?>
+            Tytuł: <?= $note['title'] ?>
         </li>
         <li>
-           <?= ($note['description']) ?>
+           <?= $note['description'] ?>
         </li>
     </ul>
     <?php else : ?>

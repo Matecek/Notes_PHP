@@ -15,7 +15,7 @@ class NoteController extends AbstractController
                 'description' => $this->request->postParam('description')
             ];
             $this->database->createNote($noteData);
-            $this->redirect('/', ['before' => 'created']);
+            $this->redirect('/', ['after' => 'created']);
         }
 
         $this->view->render('create');
@@ -35,10 +35,7 @@ class NoteController extends AbstractController
             $this->redirect('/', ['error' => 'noteNotFound']);
         }
 
-        $this->view->render(
-            'show',
-            ['note' => $note]
-        );
+        $this->view->render('show', ['note' => $note,]);
     }
 
     public function listAction()
@@ -47,7 +44,7 @@ class NoteController extends AbstractController
             'list',
             [
                 'notes' => $this->database->getNotes(),
-                'before' => $this->request->getParam('before') ?? null,
+                'after' => $this->request->getParam('after') ?? null,
                 'error' => $this->request->getParam('error') ?? null
             ]
         );
@@ -55,8 +52,17 @@ class NoteController extends AbstractController
 
     public function editAction()
     {
-//        dump($this->request);
-//        exit('edit');
+
+        if ($this->request->isPost()) {
+            $noteId = (int) $this->request->postParam('id');
+            $noteData = [
+                'title' => $this->request->postParam('title'),
+                'description' => $this->request->postParam('description')
+            ];
+            $this->database->editNote($noteId, $noteData);
+            $this->redirect('/', ['after' => 'edited']);
+        }
+
         $noteId = (int) $this->request->getParam('id');
         if (!$noteId) {
             $this->redirect('/', ['error' => 'missingNoteParams']);
@@ -68,9 +74,6 @@ class NoteController extends AbstractController
             $this->redirect('/', ['error' => 'noteNotFound']);
         }
 
-        $this->view->render(
-            'edit',
-            ['note' => $note]
-        );
+        $this->view->render('edit', ['note' => $note,]);
     }
 }

@@ -14,10 +14,13 @@
         ?>
 
         <?php
-        if (!empty($params['before'])) {
-            switch ($params['before']) {
+        if (!empty($params['after'])) {
+            switch ($params['after']) {
                 case 'created':
                     echo '<div class="message">Notatka zostało utworzona</div>';
+                    break;
+                case 'edited':
+                    echo '<div class="message">Notatka została edytowana</div>';
                     break;
             }
         }

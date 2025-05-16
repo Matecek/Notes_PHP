@@ -33,7 +33,7 @@ abstract class AbstractController
         $this->view = new View();
     }
 
-    public function run(): void
+    final public function run(): void
     {
         $action = $this->action() . 'Action';
 
@@ -43,14 +43,14 @@ abstract class AbstractController
         $this->$action();
     }
 
-    protected function redirect(string $to, array $params): void
+    final protected function redirect(string $to, array $params): void
     {
         $location = $to . '?' . http_build_query($params);
         header("Location: $location");
         exit;
     }
 
-    protected function action(): string
+    final protected function action(): string
     {
         return $this->request->getParam('action', self::DEFAULT_ACTION);
     }

@@ -93,6 +93,7 @@ form input[type=button] {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 20%;
 }
 
 form input[type=submit]:hover,

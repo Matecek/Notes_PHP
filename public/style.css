@@ -303,6 +303,10 @@ tr:nth-child(even) {
     background: #cbd5e1;
 }
 
+.settings-form label {
+    display: inline-block;
+}
+
 .message {
     background-color: #d1fae5;
     color: #065f46;

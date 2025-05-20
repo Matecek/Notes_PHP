@@ -35,22 +35,22 @@
         $order = $sort['order'] ?? 'desc';
 
         $page = $params['page'] ?? [];
-        $size = $page['size'] ?? 10;
+        $size = $page['size'] ?? 5;
         $number = $page['number'] ?? 1;
         ?>
 
         <div>
             <form class="settings-form" action="/" method="GET" id="sortForm">
                 <div>
-                    <div>Sortuj po:</div>
+                    <div>Sortuj produkt po:</div>
                     <label>Tytule<input name="sortby" type="radio" value="title" <?= $by === 'title' ? 'checked' : ''?>/></label>
                     <label>Dacie<input name="sortby" type="radio" value="created" <?= $by === 'created' ? 'checked' : ''?>/></label>
                 </div>
-                <div>
-                    <div>Kierunek sortowania</div>
-                    <label>Rosnąco <input name="sortorder" type="radio" value="asc" <?= $order === 'asc' ? 'checked' : ''?> /></label>
-                    <label>Malejąco <input name="sortorder" type="radio" value="desc" <?= $order === 'desc' ? 'checked' : ''?> /></label>
-                </div>
+<!--                <div>-->
+<!--                    <div>Kierunek sortowania</div>-->
+<!--                    <label>Rosnąco <input name="sortorder" type="radio" value="asc" --><?php //= $order === 'asc' ? 'checked' : ''?><!-- /></label>-->
+<!--                    <label>Malejąco <input name="sortorder" type="radio" value="desc" --><?php //= $order === 'desc' ? 'checked' : ''?><!-- /></label>-->
+<!--                </div>-->
                 <div>
                     <div>Wyświetl</div>
                     <label>1 <input name="pagesize" type="radio" value="1" <?= $size === 1 ? 'checked': ''?>/> </label>

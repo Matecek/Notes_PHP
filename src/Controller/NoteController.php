@@ -54,7 +54,7 @@ class NoteController extends AbstractController
         $pageNumber = (int) $this->request->getParam('page', 1);
         $pageSize = (int) $this->request->getParam('pagesize', self::PAGE_SIZE);
 
-        $sortBy = $this->request->getParam('sortby', 'title');
+        $sortBy = $this->request->getParam('sortby', 'created');
         $sortOrder = $this->request->getParam('sortorder', 'desc');
 
         if (!in_array($pageSize, [1, 5, 10])){

@@ -37,6 +37,7 @@
         $page = $params['page'] ?? [];
         $size = $page['size'] ?? 5;
         $number = $page['number'] ?? 1;
+        var_dump($size);
         ?>
 
         <div>

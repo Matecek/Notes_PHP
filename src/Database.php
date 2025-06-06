@@ -36,7 +36,7 @@ class Database
         }
 
         if (!$note) {
-            throw new NotFoundException("Notatka o id: $id nie istnieje");
+            throw new NotFoundException("Notatka o id: $id nie istnieje.");
         }
 
         return $note;

@@ -96,21 +96,18 @@
                 <li>
                     <a href="/?page=<?= $currentPage - 1 . $paginationUrl ?>"</a>
                     <button> < </button>
-                    </a>
                 </li>
             <?php endif; ?>
             <?php for ($i = 1; $i <= $pages; $i++) : ?>
                 <li>
                  <a href="/?page=<?= $i . $paginationUrl ?>"</a>
                     <button><?php echo $i ?></button>
-                 </a>
                 </li>
             <?php endfor; ?>
             <?php if($currentPage < $pages): ?>
             <li>
                 <a href="/?page=<?= $currentPage + 1 . $paginationUrl ?>"</a>
                 <button> > </button>
-                </a>
             </li>
             <?php endif; ?>
         </ul>

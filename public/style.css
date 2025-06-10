@@ -133,6 +133,13 @@ form > div:first-child > label:first-child > input:focus {
     border-bottom: 2px solid #3c8ba9;
 }
 
+form > div.settings-field{
+    display: flex;
+    gap: 0.5rem;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
 .header {
     background: linear-gradient(to right, #3b82f6, #1e40af);
     padding: 20px;

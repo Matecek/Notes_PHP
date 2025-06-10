@@ -36,22 +36,21 @@
 
         $page = $params['page'] ?? [];
         $size = $page['size'] ?? 5;
-        $number = $page['number'] ?? 1;
+        $currentPage = $page['number'] ?? 1;
         $pages = $page['pages'] ?? 1;
         ?>
 
         <div>
             <form class="settings-form" action="/" method="GET" id="sortForm">
-                <div>
+                <div class="settings-field">
                     <div>Sortuj produkt po:</div>
                     <label>Tytule<input name="sortby" type="radio" value="title" <?= $by === 'title' ? 'checked' : ''?>/></label>
                     <label>Dacie<input name="sortby" type="radio" value="created" <?= $by === 'created' ? 'checked' : ''?>/></label>
+
+                    <div>Kierunek sortowania</div>
+                    <label>Rosnąco <input name="sortorder" type="radio" value="asc" <?= $order === 'asc' ? 'checked' : ''?> /></label>
+                    <label>Malejąco <input name="sortorder" type="radio" value="desc" <?= $order === 'desc' ? 'checked' : ''?> /></label>
                 </div>
-<!--                <div>-->
-<!--                    <div>Kierunek sortowania</div>-->
-<!--                    <label>Rosnąco <input name="sortorder" type="radio" value="asc" --><?php //= $order === 'asc' ? 'checked' : ''?><!-- /></label>-->
-<!--                    <label>Malejąco <input name="sortorder" type="radio" value="desc" --><?php //= $order === 'desc' ? 'checked' : ''?><!-- /></label>-->
-<!--                </div>-->
                 <div>
                     <div>Wyświetl</div>
                     <label>1 <input name="pagesize" type="radio" value="1" <?= $size === 1 ? 'checked': ''?>/> </label>
@@ -88,14 +87,32 @@
                 </tbody>
             </table>
         </div>
+
+        <?php
+            $paginationUrl = "&pagesize=$size?sortby=$by&sortorder=$order";
+        ?>
         <ul class="pagination">
+            <?php if($currentPage !== 1): ?>
+                <li>
+                    <a href="/?page=<?= $currentPage - 1 . $paginationUrl ?>"</a>
+                    <button> < </button>
+                    </a>
+                </li>
+            <?php endif; ?>
             <?php for ($i = 1; $i <= $pages; $i++) : ?>
                 <li>
-                 <a href="/">
+                 <a href="/?page=<?= $i . $paginationUrl ?>"</a>
                     <button><?php echo $i ?></button>
                  </a>
                 </li>
             <?php endfor; ?>
+            <?php if($currentPage < $pages): ?>
+            <li>
+                <a href="/?page=<?= $currentPage + 1 . $paginationUrl ?>"</a>
+                <button> > </button>
+                </a>
+            </li>
+            <?php endif; ?>
         </ul>
     </section>
 </div>

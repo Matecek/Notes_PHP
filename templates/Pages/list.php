@@ -37,7 +37,7 @@
         $page = $params['page'] ?? [];
         $size = $page['size'] ?? 5;
         $number = $page['number'] ?? 1;
-        var_dump($size);
+        $pages = $page['pages'] ?? 1;
         ?>
 
         <div>
@@ -86,11 +86,20 @@
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
-
             </table>
         </div>
+        <ul class="pagination">
+            <?php for ($i = 1; $i <= $pages; $i++) : ?>
+                <li>
+                 <a href="/">
+                    <button><?php echo $i ?></button>
+                 </a>
+                </li>
+            <?php endfor; ?>
+        </ul>
     </section>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const rows = document.querySelectorAll("tr.clickable-row");

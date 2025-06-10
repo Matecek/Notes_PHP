@@ -25,13 +25,13 @@ try {
     (new NoteController($request))->run();
 }catch (ConfigurationException $e){
 //    mail('xxx@xxx.com', 'Error', $e->getMessage());
-    echo "<h1>Wystąpił błąd w aplikacji</h1>";
+    echo "<h1 class='error'>Wystąpił błąd w aplikacji</h1>";
     echo 'Problem z konfiguracją. Proszę skontaktować się z administratorem: xxx@xxx.com';
 }catch (AppException $e){
-    echo "<h1>Wystąpił błąd w aplikacji</h1>";
-    echo '<h3>' .$e->getMessage() .'</h3>';
+    echo "<h1 class='error'>Wystąpił błąd w aplikacji</h1>";
+    echo '<h3 >' .$e->getMessage() .'</h3>';
 }
 catch (\Throwable $e) {
-    echo "<h1>Wystąpił błąd w aplikacji</h1>";
+    echo "<h1 class='error'>Wystąpił błąd w aplikacji</h1>";
     dump($e);
 }

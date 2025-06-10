@@ -72,6 +72,23 @@ class Database
 
     }
 
+    public function getCount(): int
+    {
+        try {
+            $query = /** @lang text */
+                "SELECT count(*) AS cn FROM notes";
+            $result = $this->conn->query($query);
+            $result = $result->fetch(PDO::FETCH_ASSOC);
+            if ($result === false) {
+                throw new StorageException('Błąd przy próbie pobrania ilości', 400);
+            }
+            return (int) $result['cn'];
+        }catch (Throwable $e){
+            throw new StorageException('Nie udało się pobrać informacji o liczbie notatek', 400, $e);
+        }
+
+    }
+
     public function editNote(int $id, array $data): void
     {
         try{

@@ -117,6 +117,8 @@ form > div:first-child {
 form > div:first-child > label:first-child {
     text-transform: uppercase;
     font-weight: normal;
+    display: inline-flex;
+    align-items: center;
 }
 
 form > div:first-child > label:first-child > input {

@@ -38,10 +38,15 @@
         $size = $page['size'] ?? 5;
         $currentPage = $page['number'] ?? 1;
         $pages = $page['pages'] ?? 1;
+
+        $phrase = $params['phrase'] ?? null;
         ?>
 
         <div>
             <form class="settings-form" action="/" method="GET" id="sortForm">
+                <div>
+                    <label>Wyszukaj:<input type="text" name="phrase" value="<?= $phrase?>"/></label>
+                </div>
                 <div class="settings-field">
                     <div>Sortuj produkt po:</div>
                     <label>Tytule<input name="sortby" type="radio" value="title" <?= $by === 'title' ? 'checked' : ''?>/></label>
@@ -122,11 +127,32 @@
                 window.location.href = row.dataset.href;
             });
         });
+
+        const sortForm = document.getElementById('sortForm');
+        document.querySelectorAll('#sortForm input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', () => {
+                sessionStorage.setItem('scrollY', window.scrollY);
+                sortForm.submit();
+            });
+        });
+
+        const phraseInput = document.querySelector('#sortForm input[name="phrase"]');
+        let typingTimer;
+        const doneTypingInterval = 500;
+
+        phraseInput.addEventListener('input', function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                sessionStorage.setItem('scrollY', window.scrollY);
+                sortForm.submit();
+            }, doneTypingInterval);
+        });
+
+        const scrollY = sessionStorage.getItem('scrollY');
+        if (scrollY !== null) {
+            window.scrollTo(0, parseInt(scrollY));
+            sessionStorage.removeItem('scrollY');
+        }
     });
 
-    document.querySelectorAll('#sortForm input[type="radio"]').forEach(function(radio) {
-        radio.addEventListener('change', function() {
-            document.getElementById('sortForm').submit();
-        });
-    });
 </script>

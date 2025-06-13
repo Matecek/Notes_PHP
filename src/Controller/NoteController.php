@@ -3,27 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Exception\NotFoundException;
-
 class NoteController extends AbstractController
 {
     private const PAGE_SIZE = 5;
-
-    private function getNote(): array
-    {
-        $noteId = (int) $this->request->getParam('id');
-        if (!$noteId) {
-            $this->redirect('/', ['error' => 'missingNoteParams']);
-        }
-
-        try{
-            $note = $this->database->getNote($noteId);
-        }catch (NotFoundException $e){
-            $this->redirect('/', ['error' => 'noteNotFound']);
-        }
-
-        return $note;
-    }
 
     public function createAction(): void
     {
@@ -125,5 +107,15 @@ class NoteController extends AbstractController
                 'note' => $this->getNote(),
             ]
         );
+    }
+
+    private function getNote(): array
+    {
+        $noteId = (int) $this->request->getParam('id');
+        if (!$noteId) {
+            $this->redirect('/', ['error' => 'missingNoteParams']);
+        }
+
+        return $this->database->getNote($noteId);
     }
 }

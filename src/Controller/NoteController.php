@@ -63,10 +63,10 @@ class NoteController extends AbstractController
         }
 
         if ($phrase){
-            $note = $this->database->searchNotes($phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
+            $noteList = $this->database->searchNotes($phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
             $notes = $this->database->getSearchCount($phrase);
         }else{
-            $note = $this->database->getNotes($pageNumber, $pageSize, $sortBy, $sortOrder);
+            $noteList = $this->database->getNotes($pageNumber, $pageSize, $sortBy, $sortOrder);
             $notes = $this->database->getCount();
         }
 
@@ -83,7 +83,7 @@ class NoteController extends AbstractController
                     'by' => $sortBy,
                     'order' => $sortOrder
                 ],
-                'notes' => $note,
+                'notes' => $noteList,
                 'after' => $this->request->getParam('after') ?? null,
                 'error' => $this->request->getParam('error') ?? null
             ]

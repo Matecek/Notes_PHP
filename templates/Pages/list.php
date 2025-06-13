@@ -31,7 +31,7 @@
 
         <?php
         $sort = $params['sort'] ?? [];
-        $by = $sort['by'] ?? 'created';
+        $by = $sort['by'] ?? 'title';
         $order = $sort['order'] ?? 'desc';
 
         $page = $params['page'] ?? [];
@@ -94,26 +94,29 @@
         </div>
 
         <?php
-            $paginationUrl = "&pagesize=$size?sortby=$by&sortorder=$order";
+            $paginationUrl = "&phrase=$phrase&pagesize=$size&sortby=$by&sortorder=$order";
         ?>
         <ul class="pagination">
             <?php if($currentPage !== 1): ?>
                 <li>
-                    <a href="/?page=<?= $currentPage - 1 . $paginationUrl ?>"</a>
-                    <button> < </button>
+                    <a href="/?page=<?= $currentPage - 1 . $paginationUrl ?>">
+                        <button> < </button>
+                    </a>
                 </li>
             <?php endif; ?>
             <?php for ($i = 1; $i <= $pages; $i++) : ?>
                 <li>
-                 <a href="/?page=<?= $i . $paginationUrl ?>"</a>
-                    <button><?php echo $i ?></button>
+                    <a href="/?page=<?= $i . $paginationUrl ?>">
+                        <button><?php echo $i ?></button>
+                    </a>
                 </li>
             <?php endfor; ?>
             <?php if($currentPage < $pages): ?>
-            <li>
-                <a href="/?page=<?= $currentPage + 1 . $paginationUrl ?>"</a>
-                <button> > </button>
-            </li>
+                <li>
+                    <a href="/?page=<?= $currentPage + 1 . $paginationUrl ?>">
+                        <button> > </button>
+                    </a>
+                </li>
             <?php endif; ?>
         </ul>
     </section>

@@ -50,7 +50,7 @@
                 <div class="settings-field">
                     <div>Sortuj produkt po:</div>
                     <label>Tytule<input name="sortby" type="radio" value="title" <?= $by === 'title' ? 'checked' : ''?>/></label>
-                    <label>Dacie<input name="sortby" type="radio" value="created" <?= $by === 'created' ? 'checked' : ''?>/></label>
+                    <label>Dacie edycji<input name="sortby" type="radio" value="edited" <?= $by === 'edited' ? 'checked' : ''?>/></label>
 
                     <div>Kierunek sortowania</div>
                     <label>Rosnąco <input name="sortorder" type="radio" value="asc" <?= $order === 'asc' ? 'checked' : ''?> /></label>
@@ -71,7 +71,8 @@
                 <tr>
                     <th>Id</th>
                     <th>Tytuł</th>
-                    <th>Data</th>
+                    <th>Data utworzenia</th>
+                    <th>Data edycji</th>
                     <th>Opcje</th>
                 </tr>
                 </thead>
@@ -80,8 +81,9 @@
                     <tr class="clickable-row" data-href="/?action=show&id=<?= $note['id'] ?>">
                         <td><?= $note['id']?></td>
                         <td><?= $note['title'] ?></td>
-                        <td><?= $note['created'] ?></td>
-<!--                        <td><button>Pokaż</button></td>-->
+                        <td><?= date('Y-m-d H:i', strtotime($note['created'])) ?></td>
+                        <td><?= date('Y-m-d H:i', strtotime($note['edited'])) ?></td>
+                        <!--<td><button>Pokaż</button></td>-->
                         <td>
                             <a href="/?action=delete&id=<?= $note['id']?>">
                                 <button>Usuń</button>

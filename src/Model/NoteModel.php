@@ -8,9 +8,9 @@ use App\Exception\StorageException;
 use PDO;
 use Throwable;
 
-class NoteModel extends AbstractModel
+class NoteModel extends AbstractModel implements ModelInterface
 {
-    public function getNotes(
+    public function list(
         int $pageNumber,
         int $pageSize,
         string $sortBy,
@@ -19,17 +19,17 @@ class NoteModel extends AbstractModel
         return $this->findBy(null, $pageNumber, $pageSize, $sortBy, $sortOrder);
     }
 
-    public function searchNotes(
+    public function search(
         string $phrase,
         int $pageNumber,
         int $pageSize,
         string $sortBy,
         string $sortOrder
-    ): array{
+    ): array {
         return $this->findBy($phrase, $pageNumber, $pageSize, $sortBy, $sortOrder);
     }
 
-    public function getCount(): int
+    public function count(): int
     {
         try {
             $query = /** @lang text */
@@ -46,7 +46,7 @@ class NoteModel extends AbstractModel
 
     }
 
-    public function getSearchCount(string $phrase): int
+    public function searchCount(string $phrase): int
     {
         try {
             $phrase = $this->conn->quote('%' . $phrase . '%', PDO::PARAM_STR);
@@ -64,7 +64,7 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function getNote(int $id): array
+    public function get(int $id): array
     {
         try{
             $query = /** @lang text */
@@ -82,15 +82,15 @@ class NoteModel extends AbstractModel
         return $note;
     }
 
-    public function createNote(array $data): void
+    public function create(array $data): void
     {
         try{
             $title = $this->conn->quote($data['title']);
             $description = $this->conn->quote($data['description']);
-            $created = $this->conn->quote(date('Y-m-d H:i:s'));
+            $dateTime = $this->conn->quote(date('Y-m-d H:i:s'));
 
             $query = /** @lang text */
-                "INSERT INTO notes (title, description, created) VALUES ($title, $description, $created)";
+                "INSERT INTO notes (title, description, created, edited) VALUES ($title, $description, $dateTime, $dateTime)";
 
             $this->conn->exec($query);
         }catch (Throwable $e){
@@ -98,14 +98,15 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function editNote(int $id, array $data): void
+    public function edit(int $id, array $data): void
     {
         try{
             $title = $this->conn->quote($data['title']);
             $description = $this->conn->quote($data['description']);
+            $dateTime = $this->conn->quote(date('Y-m-d H:i:s'));
 
             $query = /** @lang text */
-                "UPDATE notes SET title = $title, description = $description WHERE id = $id";
+                "UPDATE notes SET title = $title, description = $description, edited = $dateTime WHERE id = $id";
 
             $this->conn->exec($query);
         }catch (Throwable $e){
@@ -113,7 +114,7 @@ class NoteModel extends AbstractModel
         }
     }
 
-    public function deleteNote(int $id): void
+    public function delete(int $id): void
     {
         try {
             $query = /** @lang text */
@@ -134,8 +135,8 @@ class NoteModel extends AbstractModel
             $limit = $pageSize;
             $offset = ($pageNumber - 1) * $pageSize;
 
-            if (!in_array($sortBy, ['created', 'title'])){
-                $sortBy = 'created';
+            if (!in_array($sortBy, ['edited', 'title'])){
+                $sortBy = 'edited';
             }
             if (!in_array($sortOrder, ['asc', 'desc'])){
                 $sortOrder = 'desc';
@@ -148,7 +149,7 @@ class NoteModel extends AbstractModel
             }
 
             $query = /** @lang text */
-                "SELECT id, title, created 
+                "SELECT id, title, created, edited 
                 FROM notes
                 $wherePart
                 ORDER BY $sortBy $sortOrder
